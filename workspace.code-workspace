@@ -1,0 +1,13 @@
+{
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "files.associations": {
+            "usbd_cdc_if.h": "c",
+            "mainpp.h": "c"
+        }
+    }
+}
