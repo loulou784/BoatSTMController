@@ -12,8 +12,11 @@
  extern "C" {
 #endif
 
+#include "stdint.h"
+
 void setup(void);
 void loop(void);
+void cdc_receive_put(uint8_t value);
 
 #ifdef __cplusplus
 }

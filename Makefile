@@ -37,7 +37,6 @@ BUILD_DIR = build
 # C sources
 C_SOURCES =  \
 Core/Src/gpio.c \
-Core/Src/freertos.c \
 Core/Src/stm32f4xx_it.c \
 Core/Src/stm32f4xx_hal_msp.c \
 Core/Src/stm32f4xx_hal_timebase_tim.c \
@@ -85,9 +84,11 @@ startup_stm32f411xe.s
 
 CPP_SOURCES = \
 Core/Src/main.cpp \
+Core/Src/freertos.cpp \
 Core/Src/ROSMain.cpp \
-Core/Inc/time.cpp \
-Core/Inc/duration.cpp \
+Core/Inc/ros_lib/time.cpp \
+Core/Inc/ros_lib/duration.cpp \
+Core/Inc/ringbuffer.cpp \
 
 
 #######################################
@@ -161,9 +162,10 @@ C_INCLUDES =  \
 -IDrivers/CMSIS/Include
 
 CPP_INCLUDES =  $(C_INCLUDES) \
--ICore/Inc/ros \
--ICore/Inc/rosserial_msgs \
--ICore/Inc/std_msgs \
+-ICore/Inc/ros_lib \
+-ICore/Inc/ros_lib/ros \
+-ICore/Inc/ros_lib/rosserial_msgs \
+-ICore/Inc/ros_lib/std_msgs \
 -I/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/c++/10.3.1/
 
 # compile gcc flags

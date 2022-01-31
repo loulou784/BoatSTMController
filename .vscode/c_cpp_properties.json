@@ -4,7 +4,8 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/**"
+                "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/**",
+                "${workspaceFolder}/Core/Inc/ros_lib/**"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

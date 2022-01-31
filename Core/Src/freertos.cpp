@@ -25,7 +25,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "usbd_cdc_if.h"
+#include "ROSMain.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -51,18 +51,25 @@ osThreadId defaultTaskHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
-
+#ifdef __cplusplus
+extern "C" {
+#endif
 /* USER CODE END FunctionPrototypes */
 
 void StartDefaultTask(void const * argument);
 
-extern void MX_USB_DEVICE_Init(void);
+void MX_USB_DEVICE_Init(void);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /* GetIdleTaskMemory prototype (linked to static allocation support) */
 void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize );
 
 /* USER CODE BEGIN GET_IDLE_TASK_MEMORY */
+
+#ifdef __cplusplus
+}
+#endif
+
 static StaticTask_t xIdleTaskTCBBuffer;
 static StackType_t xIdleStack[configMINIMAL_STACK_SIZE];
 
@@ -103,7 +110,7 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
+  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 512);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
@@ -124,19 +131,12 @@ void StartDefaultTask(void const * argument)
   /* init code for USB_DEVICE */
   MX_USB_DEVICE_Init();
   /* USER CODE BEGIN StartDefaultTask */
-  //setup();
-  uint8_t u8Buffer[40] = {0};
-  int iS = 0;
-  uint8_t u8Value = 0;
+  setup();
   /* Infinite loop */
   for(;;)
   {
-    //loop();
-    HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-    iS = snprintf((char *)u8Buffer, sizeof(u8Buffer), "Hello World -> %d\n\r", u8Value);
-    CDC_Transmit_FS(u8Buffer, iS);
-    u8Value++;
-    osDelay(100);
+    loop();
+    osDelay(10);
   }
   /* USER CODE END StartDefaultTask */
 }
